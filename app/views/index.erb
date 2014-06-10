@@ -1,1 +1,17 @@
 <h1><%= @title %></h1>
+
+<ul>
+  <% @meetups.each do |meetup| %>
+    <li>
+      <a href="<%= url("/meetups/#{meetup["id"]}") %>">
+        <%= meetup.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+
+<a href="/submit">
+  <p>
+    Submit a new post here!
+  </p>
+</a>
