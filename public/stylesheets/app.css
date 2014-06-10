@@ -4,7 +4,7 @@ body {
   color: #FFFFFF;
 }
 
-input {
+input[type="text"] {
   color: #000000;
 }
 

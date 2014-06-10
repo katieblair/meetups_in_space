@@ -293,6 +293,10 @@ input[type="submit"] {
   cursor: pointer; /* 3 */
 }
 
+input[type="text"] {
+  color: #000000;
+}
+
 /**
  * Re-set default cursor for disabled elements.
  */

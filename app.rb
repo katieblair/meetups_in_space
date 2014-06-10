@@ -67,9 +67,10 @@ end
 
 post '/submit' do
   #must be signed in to create new post
-  Event.create(name: params['name'], description: params['description'], location: params['location'])
+  @event = Event.create(name: params['name'], description: params['description'], location: params['location'])
 
-  redirect 'meetups/id'
+  redirect '/' #not where it's actually supposed to go
+  #redirect 'meetups/#{@event.id}'   #where it's actually supposed to go
 
 end
 
