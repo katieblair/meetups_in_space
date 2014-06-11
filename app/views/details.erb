@@ -9,13 +9,13 @@
   <tbody>
       <tr>
         <td>
-          <%= @meetup.name %>
+          <%= @event.name %>
         </td>
         <td>
-          <%= @meetup.description %>
+          <%= @event.description %>
         </td>
         <td>
-          <%= @meetup.location %>
+          <%= @event.location %>
         </td>
       </tr>
   </tbody>
@@ -23,7 +23,7 @@
 
 
 <h3>Join this meetup!</h3>
-<form action="/submit" method="post">
+<form action="/events/<%= @event.id %>" method="post">
 
   <input type="submit" />
 

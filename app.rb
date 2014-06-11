@@ -29,11 +29,6 @@ def authenticate!
   end
 end
 
-get '/' do
-  @meetups = Event.all.sort_by &:name
-  erb :index
-end
-
 get '/auth/github/callback' do
   auth = env['omniauth.auth']
 
@@ -55,31 +50,41 @@ get '/example_protected_page' do
   authenticate!
 end
 
-get '/meetups/:id' do
-  @meetup = Event.find_by_id(params[:id])
-
-  erb :details
+get '/' do
+  redirect '/events'
 end
 
-get '/submit' do
+get '/events' do
+  @events = Event.all.sort_by &:name
+  erb :index
+end
+
+get '/events/submit' do
+  authenticate!
   erb :submit
 end
 
-post '/submit' do
-  #must be signed in to create new post
+post '/events/submit' do
   @event = Event.create(name: params['name'], description: params['description'], location: params['location'])
-
-  redirect '/' #not where it's actually supposed to go
-  #redirect 'meetups/#{@event.id}'   #where it's actually supposed to go
+  redirect "/events/#{@event.id}"
 
 end
 
-#joining a meetup
-#create a button
-#on details page
+get '/events/:id' do
+  #if coming from new event creation
+    #flash[:notice] = "You have successfully created an event!"
+    #@event = Event.find_by_id(params[:id])
 
+    #erb :details
+  #else no message:
+    @event = Event.find_by_id(params[:id])
+    erb :details
+end
 
-
-
-
+post '/events/:id' do
+  authenticate!
+  attendee = Attendee.create(users_id: current_user.id, events_id: params[:id])
+  flash[:notice] = "You have successfully joined this meetup!"
+  redirect '/events'
+end
 
