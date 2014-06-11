@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'omniauth-github'
+require 'pry'
 
 require_relative 'config/application'
 
@@ -70,16 +71,15 @@ post '/events/submit' do
 
 end
 
+binding.pry
 get '/events/:id' do
-  #if coming from new event creation
-    #flash[:notice] = "You have successfully created an event!"
-    #@event = Event.find_by_id(params[:id])
-
-    #erb :details
-  #else no message:
     @event = Event.find_by_id(params[:id])
+
+    @attendees = Attendee.find_by(params[:event_id])
+    binding.pry
     erb :details
 end
+binding.pry
 
 post '/events/:id' do
   authenticate!
